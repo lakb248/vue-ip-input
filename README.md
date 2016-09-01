@@ -1,2 +1,10 @@
 # vue-ip-input
-vue-ip-input implement by vuejs
+An ip input implement by vuejs
+
+# Usage
+
+## Install
+
+```bash
+npm install vue-ip-input --save
+```
