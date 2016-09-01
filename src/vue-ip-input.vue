@@ -108,6 +108,7 @@
             },
             onInput(event, index) {
                 var value = event.target.value;
+		// jump to next input
                 if (value.length === 3 && index < 3) {
                     this.$el.getElementsByTagName('input')[index + 1].focus();
                 }
