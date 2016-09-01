@@ -9,9 +9,18 @@
     "test": "karma start karma.config.js",
     "prepublish": "npm run test && npm run build"
   },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/lakb248/vue-ip-input.git"
+  },
+  "bugs": {
+    "url": "https://github.com/lakb248/vue-ip-input/issues"
+  },
   "keywords": [
     "vue-component",
-    "vuejs"
+    "vuejs",
+    "ip",
+    "ip-input"
   ],
   "author": "lakb248@gmail.com",
   "license": "ISC",
