@@ -1,8 +1,8 @@
 {
   "name": "vue-ip-input",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "An ip input implement by vuejs",
-  "main": "./dist/vue-ip-input.js",
+  "main": "./dist/vue-ip-input.min.js",
   "scripts": {
     "dev": "webpack-dashboard -p 3001 -- webpack-dev-server --watch --progress --config webpack.dev.config.js --port 8888",
     "build": "webpack --progress --config webpack.prod.config.js",

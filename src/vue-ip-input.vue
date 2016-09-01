@@ -6,7 +6,6 @@
                 v-on:input="onInput($event, $index)"
                 v-on:blur="onInputBlur()">
             <i v-show="$index != segments.length - 1">.</i>
-            {{segment}}
         </div>
     </div>
 </template>
