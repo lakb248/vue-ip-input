@@ -1,7 +1,7 @@
 {
   "name": "vue-ip-input",
   "version": "0.0.1",
-  "description": "a seed for vue component",
+  "description": "An ip input implement by vuejs",
   "main": "./dist/vue-ip-input.js",
   "scripts": {
     "dev": "webpack-dashboard -p 3001 -- webpack-dev-server --watch --progress --config webpack.dev.config.js --port 8888",
