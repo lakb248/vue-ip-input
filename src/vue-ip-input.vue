@@ -99,12 +99,6 @@
                 } else {
                     event.preventDefault();
                 }
-                setTimeout(() => {
-                    var ip = [];
-                    this.$el.querySelectorAll('input').forEach(input => {
-                        ip.push(input.value);
-                    });
-                }, 50);
             },
             onInput(event, index) {
                 var value = event.target.value;
