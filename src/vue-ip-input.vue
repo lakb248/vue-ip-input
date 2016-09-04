@@ -4,7 +4,8 @@
             <input type="text" maxlength="3" class="ip-segment-input" :value="segment"
                 v-on:keydown="onInputKeydown($event, $index)"
                 v-on:input="onInput($event, $index)"
-                v-on:blur="onInputBlur()">
+                v-on:blur="onInputBlur()"
+                v-on:paste="onPaste($event, $index)">
             <i v-show="$index != segments.length - 1">.</i>
         </div>
     </div>
@@ -111,11 +112,22 @@
                     var className = document.activeElement.className;
                     if (className.indexOf('ip-segment-input') === -1) {
                         if (this.onBlur) {
-                            console.log('on blur');
                             this.onBlur(this.segments.join('.'));
                         }
                     }
                 }, 50);
+            },
+            onPaste(e, index) {
+                var pasteText = e.clipboardData.getData('text/plain');
+                var segments = pasteText.split('.');
+                segments.forEach((segment, i) => {
+                    var value = Number(segment);
+                    if (index + i < 4 && !isNaN(value) &&
+                    value >= 0 && value <= 255) {
+                        this.segments.$set(index + i, value);
+                    }
+                });
+                e.preventDefault();
             }
         },
         ready() {
