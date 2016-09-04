@@ -1,7 +1,7 @@
 <template>
     <div class="ip-input-container">
         <div class="ip-segment" v-for="segment in segments" track-by="$index">
-            <input type="text" maxlength="3" class="ip-segment-input" v-model="segment"
+            <input type="text" maxlength="3" class="ip-segment-input" :value="segment"
                 v-on:keydown="onInputKeydown($event, $index)"
                 v-on:input="onInput($event, $index)"
                 v-on:blur="onInputBlur()">
@@ -70,21 +70,10 @@
             };
         },
         methods: {
-            onInputKeydown(event, index, type) {
+            onInputKeydown(event, index) {
                 var keyCode = event.keyCode || event.which;
                 var value = event.target.value;
-                if (keyCode <= 57 && keyCode >= 48) {
-                    // number input
-                    // segment is the value after keydown
-                    var segment = Number(value + (keyCode - 48));
-                    // prevent NaN input or zero or bigger than 1000
-                    if (isNaN(segment) || segment === 0 || segment >= 1000) {
-                        event.preventDefault();
-                    } else if (segment <= 999 && segment > 255) {
-                        // set the segment to 255 if out of ip range
-                        this.segments.$set(index, 255);
-                    }
-                } else if (keyCode === 8 || keyCode === 37) {
+                if (keyCode === 8 || keyCode === 37) {
                     // move the cursor to previous input if backspace and left arrow is pressed at the begin of one input
                     if ((value.length === 0 || getRange(event.target).end === 0) &&
                         index > 0) {
@@ -96,13 +85,23 @@
                         // move to cursor to the next input if right arrow is pressed at the end of one input
                         this.$el.getElementsByTagName('input')[index + 1].focus();
                     }
-                } else {
-                    event.preventDefault();
                 }
             },
             onInput(event, index) {
                 var value = event.target.value;
-		// jump to next input
+                event.target.value = this.segments[index];
+                var segment = Number(value);
+                if (isNaN(segment)) {
+                    return;
+                } else if (segment > 255 || segment < 0) {
+                    // set the segment to 255 if out of ip range
+                    this.segments.$set(index, 255);
+                } else if (segment === 0) {
+                    this.segments.$set(index, '');
+                } else {
+                    this.segments.$set(index, segment);
+                }
+                // jump to next input
                 if (value.length === 3 && index < 3) {
                     this.$el.getElementsByTagName('input')[index + 1].focus();
                 }
@@ -112,6 +111,7 @@
                     var className = document.activeElement.className;
                     if (className.indexOf('ip-segment-input') === -1) {
                         if (this.onBlur) {
+                            console.log('on blur');
                             this.onBlur(this.segments.join('.'));
                         }
                     }

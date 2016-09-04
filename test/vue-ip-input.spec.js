@@ -1,4 +1,4 @@
-/* global window, document, describe, it, expect */
+/* global document, describe, it, expect */
 import Vue from 'vue';
 import IpInput from '../src/vue-ip-input.vue';
 
@@ -30,12 +30,12 @@ var initIpInput = config => {
     }).$mount().$appendTo('body');
 };
 
-var triggerKeydown = (elem, keyCode) => {
-    var keyEvent = document.createEvent('Event');
-    keyEvent.initEvent('keydown', true, true, window, false, false,
-        false, false, 50, 50);
-    keyEvent.keyCode = keyCode;
-    elem.dispatchEvent(keyEvent);
+var trigger = (target, event, process) => {
+    var e = document.createEvent('HTMLEvents');
+    e.initEvent(event, true, true);
+    if (process) process(e);
+    target.dispatchEvent(e);
+    return e;
 };
 
 describe('vue-ip-input.vue', () => {
@@ -113,27 +113,87 @@ describe('vue-ip-input.vue', () => {
             }, 100);
         });
     });
-    // it('should update the ip if keydown(Number 2)', done => {
-    //     var vm = initIpInput({
-    //         ip: '127.0.0.1'
-    //     });
-    //     var ipInput = vm.$refs.ipInput;
-    //     var input = ipInput.$el.querySelector('input');
-    //     triggerKeydown(input, 50);
-    //     Vue.nextTick(() => {
-    //         expect(vm.ip).toBe('2.0.0.1');
-    //         done();
-    //     });
-    // });
-    it('should prevent the event if incorrect keydown(Alphabat a)', done => {
+    it('should update the ip if keydown(Number 2)', done => {
         var vm = initIpInput({
             ip: '127.0.0.1'
         });
         var ipInput = vm.$refs.ipInput;
-        var input = ipInput.$el.querySelector('input');
-        triggerKeydown(input, 58);
+        var input = ipInput.$el.querySelectorAll('input')[1];
+        input.value = '2';
+        trigger(input, 'input');
         Vue.nextTick(() => {
-            expect(vm.ip).toBe('127.0.0.1');
+            expect(vm.ip).toBe('127.2.0.1');
+            done();
+        });
+    });
+    it('should prevent the event if incorrect keydown(Alphabat a)', done => {
+        var vm = initIpInput({
+            ip: '0.0.0.1'
+        });
+        var ipInput = vm.$refs.ipInput;
+        var input = ipInput.$el.querySelector('input');
+        input.value = 'a';
+        trigger(input, 'input');
+        Vue.nextTick(() => {
+            expect(vm.ip).toBe('0.0.0.1');
+            done();
+        });
+    });
+    it('should set to 255 if the input is over 255', done => {
+        var vm = initIpInput({
+            ip: '0.0.0.1'
+        });
+        var ipInput = vm.$refs.ipInput;
+        var input = ipInput.$el.querySelector('input');
+        input.value = '256';
+        trigger(input, 'input');
+        Vue.nextTick(() => {
+            expect(vm.ip).toBe('255.0.0.1');
+            done();
+        });
+    });
+    it('should set to empty if the input is 0', done => {
+        var vm = initIpInput({
+            ip: '0.0.0.1'
+        });
+        var ipInput = vm.$refs.ipInput;
+        var input = ipInput.$el.querySelector('input');
+        input.value = '0';
+        trigger(input, 'input');
+        Vue.nextTick(() => {
+            expect(vm.ip).toBe('.0.0.1');
+            done();
+        });
+    });
+    it('should move the cursor to previous' +
+        'input if left arrow is pressed', done => {
+        var vm = initIpInput({
+            ip: '0..0.1'
+        });
+        var ipInput = vm.$refs.ipInput;
+        var input = ipInput.$el.querySelectorAll('input')[1];
+        trigger(input, 'keydown', e => {
+            e.keyCode = 37;
+        });
+        Vue.nextTick(() => {
+            expect(document.activeElement)
+            .toBe(ipInput.$el.querySelector('input'));
+            done();
+        });
+    });
+    it('should move the cursor to next' +
+        'input if right arrow is pressed', done => {
+        var vm = initIpInput({
+            ip: '...'
+        });
+        var ipInput = vm.$refs.ipInput;
+        var input = ipInput.$el.querySelectorAll('input')[0];
+        trigger(input, 'keydown', e => {
+            e.keyCode = 39;
+        });
+        Vue.nextTick(() => {
+            expect(document.activeElement)
+            .toBe(ipInput.$el.querySelectorAll('input')[1]);
             done();
         });
     });
