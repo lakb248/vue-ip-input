@@ -24,8 +24,9 @@ module.exports = function(config) {
         coverageReporter: {
             dir: './coverage',
             reporters: [
-                {type: 'html', subdir: './test/coverage'},
-                {type: 'text-summary'}
+                {type: 'html'},
+                {type: 'text-summary'},
+                {type: 'cobertura', subdir: '.'}
             ]
         },
         webpack: webpackConfig,
