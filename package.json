@@ -7,6 +7,7 @@
     "dev": "webpack-dashboard -p 3001 -- webpack-dev-server --watch --progress --config webpack.dev.config.js --port 8888",
     "build": "webpack --progress --config webpack.prod.config.js",
     "test": "karma start karma.config.js",
+    "ci": "npm run test && npm run build",
     "prepublish": "npm run test && npm run build"
   },
   "repository": {

@@ -1,0 +1,8 @@
+nguage: node_js
+node_js:
+  - 6.3.0
+script:
+  - npm run ci
+branches:
+  only:
+    - master
