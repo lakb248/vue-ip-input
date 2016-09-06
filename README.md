@@ -65,12 +65,9 @@ new Vue({
 
 ### Props
 
-+ ip
-the value of ip input
-+ onChange
-trigger when the ip change
-+ onBlur
-trigger when the input blur
++ ip: the value of ip input
++ onChange: trigger when the ip change
++ onBlur: trigger when the input blur
 
 ## License
 
