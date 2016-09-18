@@ -9,7 +9,7 @@ config.entry = './src/index.js';
 config.output = {
     path: path.resolve('dist') + '/',
     filename: 'vue-ip-input.min.js',
-    library: 'vueIpInput',
+    library: 'VueIpInput',
     libraryTarget: 'umd'
 };
 

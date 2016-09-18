@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>Vue Ip Input</title>
+    </head>
+    <body>
+        <div id="wrap">
+            <vue-ip-input :ip.sync="ip" :on-change="onIpChange" :on-blur="onIpBlur"></vue-ip-input>
+            <div>Result: {{ip}}</div>
+            <p>Change Event:</p>
+            <ul>
+                <li v-for="event in changeEvents" track-by="$index">{{event.timestamp}}: {{event.val}}</li>
+            </ul>
+            <p>Blur Event:</p>
+            <ul>
+                <li v-for="event in blurEvents" track-by="$index">{{event.timestamp}}: {{event.val}}</li>
+            </ul>
+        </div>
+        <script type="text/javascript" src="https://cdn.jsdelivr.net/vue/1.0.26/vue.min.js"></script>
+        <script type="text/javascript" src="../dist/vue-ip-input.min.js"></script>
+        <script type="text/javascript">
+            new Vue({
+                el: '#wrap',
+                components: {
+                    'vue-ip-input': VueIpInput
+                },
+                data: function () {
+                    return {
+                        ip: '127.0.0.1',
+                        changeEvents: [],
+                        blurEvents: []
+                    };
+                },
+                methods: {
+                    onIpChange: function (val) {
+                        this.changeEvents.push({
+                            timestamp: new Date().toString(),
+                            val: val
+                        });
+                    },
+                    onIpBlur: function (val) {
+                        this.blurEvents.push({
+                            timestamp: new Date().toString(),
+                            val: val
+                        });
+                    }
+                }
+            });
+        </script>
+    </body>
+</html>
