@@ -4,6 +4,10 @@
 
 > An ip input implement by vuejs
 
+## Demo
+
+[Demo](https://lakb248.github.io/vue-ip-input/example/index.html)
+
 ## Usage
 
 ### Install
