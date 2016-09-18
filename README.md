@@ -6,7 +6,7 @@
 
 ## Demo
 
-[Demo](https://lakb248.github.io/vue-ip-input/example/index.html)
+[Demo](https://lakb248.github.io/vue-ip-input)
 
 ## Usage
 
