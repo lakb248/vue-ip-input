@@ -7,8 +7,7 @@
     "dev": "webpack-dashboard -p 3001 -- webpack-dev-server --watch --progress --config webpack.dev.config.js --port 8888",
     "build": "webpack --progress --config webpack.prod.config.js",
     "test": "karma start karma.config.js",
-    "ci": "npm run test && npm run build && codecov -t 4f1b7b5a-9eb3-41f5-9218-08b805826905 coverage/cobertura-coverage.xml",
-    "prepublish": "npm run test && npm run build"
+    "ci": "npm run test && npm run build && codecov -t 4f1b7b5a-9eb3-41f5-9218-08b805826905 coverage/cobertura-coverage.xml"
   },
   "repository": {
     "type": "git",
