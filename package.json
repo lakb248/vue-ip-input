@@ -11,7 +11,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/lakb248/vue-ip-input.git"
+    "url": "https://github.com/lakb248/vue-ip-input.git#next"
   },
   "bugs": {
     "url": "https://github.com/lakb248/vue-ip-input/issues"
