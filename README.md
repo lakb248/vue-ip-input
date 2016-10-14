@@ -16,6 +16,12 @@
 npm install vue-ip-input --save
 ```
 
+And, if you are using vue 2.0
+
+```bash
+npm install vue-ip-input@next --save
+``` 
+
 ### CommonJS
 
 ```javascript
