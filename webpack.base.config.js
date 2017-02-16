@@ -6,11 +6,11 @@ module.exports = {
     module: {
         loaders: [{
             test: /\.js$/,
-            loader: 'babel',
+            loader: 'babel-loader',
             exclude: /node_modules/
         }, {
             test: /\.vue$/,
-            loader: 'vue'
+            loader: 'vue-loader'
         }]
     }
 };
