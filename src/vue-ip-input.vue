@@ -70,6 +70,9 @@
                 segments: ['', '', '', '']
             };
         },
+        watch:{
+            ip: function(){ this.onReady() }
+        },
         methods: {
             onInputKeydown(event, index) {
                 var keyCode = event.keyCode || event.which;
@@ -128,38 +131,42 @@
                     }
                 });
                 e.preventDefault();
+            },
+            onReady() {
+                console.debug(this.ip);
+                var ip = this.ip;
+                if (ip && ip.indexOf('.') !== -1) {
+                    ip.split('.').map((segment, index) => {
+                        segment = Number(segment);
+                        if (isNaN(segment) || segment < 0 || segment > 255) {
+                            segment = 255;
+                        }
+                        this.segments.$set(index, segment);
+                        return segment;
+                    });
+                }
+                this.$watch(() => {
+                    return this.segments.join('.');
+                }, (val, oldValue) => {
+                    if (val !== oldValue) {
+                        if (val === '...') {
+                            val = '';
+                        }
+                        this.ip = val;
+                        if (this.onChange) {
+                            this.onChange(val);
+                        }
+                    }
+                });
             }
         },
         ready() {
-            var ip = this.ip;
-            if (ip && ip.indexOf('.') !== -1) {
-                ip.split('.').map((segment, index) => {
-                    segment = Number(segment);
-                    if (isNaN(segment) || segment < 0 || segment > 255) {
-                        segment = 255;
-                    }
-                    this.segments.$set(index, segment);
-                    return segment;
-                });
-            }
-            this.$watch(() => {
-                return this.segments.join('.');
-            }, (val, oldValue) => {
-                if (val !== oldValue) {
-                    if (val === '...') {
-                        val = '';
-                    }
-                    this.ip = val;
-                    if (this.onChange) {
-                        this.onChange(val);
-                    }
-                }
-            });
+            this.onReady();
         }
     };
 </script>
 
-<style lang="sass" scoped>
+<style lang="sass-loader" scoped>
     .ip-input-container {
         display: inline-block;
         height: 28px;
