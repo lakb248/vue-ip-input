@@ -1,5 +1,5 @@
 {
-  "name": "vue-ip-input-ar",
+  "name": "vue-ip-input",
   "version": "1.2.0",
   "description": "An ip input implement by vuejs",
   "main": "./dist/vue-ip-input.min.js",
@@ -11,10 +11,10 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/pilevar/vue-ip-input-ar.git"
+    "url": "https://github.com/lakb248/vue-ip-input.git"
   },
   "bugs": {
-    "url": "https://github.com/pilevar/vue-ip-input-ar/issues"
+    "url": "https://github.com/lakb248/vue-ip-input/issues"
   },
   "keywords": [
     "vue-component",
