@@ -2,7 +2,7 @@
 [![Build Status](https://travis-ci.org/lakb248/vue-ip-input.svg?branch=next)](https://travis-ci.org/lakb248/vue-ip-input)
 [![codecov](https://codecov.io/gh/lakb248/vue-ip-input/branch/next/graph/badge.svg)](https://codecov.io/gh/lakb248/vue-ip-input)
 
-> An ip input implement by vuejs
+> An ip input implement by vue 2.0
 
 ## Demo
 
@@ -15,12 +15,6 @@
 ```bash
 npm install vue-ip-input --save
 ```
-
-And, if you are using vue 2.0
-
-```bash
-npm install vue-ip-input@next --save
-``` 
 
 ### CommonJS
 
