@@ -14,6 +14,9 @@ new Vue({
     methods: {
         ipChange(ip) {
             this.ip = ip;
+        },
+        changeIp() {
+            this.ip = '1.1.1.1';
         }
     }
 });

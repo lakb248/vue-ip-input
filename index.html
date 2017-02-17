@@ -8,6 +8,7 @@
         <div id="container">
             <vue-ip-input :ip="ip" :on-change="ipChange"></vue-ip-input>
             <p>IP: {{ip}}</p>
+            <button v-on:click="changeIp()">Change</button>
         </div>
         <script type="text/javascript" src="/build/build.js"></script>
     </body>

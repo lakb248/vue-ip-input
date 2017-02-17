@@ -70,6 +70,11 @@
                 segments: ['', '', '', '']
             };
         },
+        watch: {
+            ip(ip) {
+                this.syncIp(ip);
+            }
+        },
         methods: {
             onInputKeydown(event, index) {
                 var keyCode = event.keyCode || event.which;
@@ -128,21 +133,22 @@
                     }
                 });
                 e.preventDefault();
+            },
+            syncIp(ip) {
+                if (ip && ip.indexOf('.') !== -1) {
+                    ip.split('.').map((segment, index) => {
+                        segment = Number(segment);
+                        if (isNaN(segment) || segment < 0 || segment > 255) {
+                            segment = 255;
+                        }
+                        this.segments.splice(index, 1, segment);
+                        return segment;
+                    });
+                }
             }
         },
         mounted() {
-            var ip = this.ip;
-            if (ip && ip.indexOf('.') !== -1) {
-                ip.split('.').map((segment, index) => {
-                    segment = Number(segment);
-                    if (isNaN(segment) || segment < 0 || segment > 255) {
-                        segment = 255;
-                    }
-                    this.segments.splice(index, 1, segment);
-                    return segment;
-                });
-            }
-
+            this.syncIp(this.ip);
             this.$watch(() => {
                 return this.segments.join('.');
             }, (val, oldValue) => {
