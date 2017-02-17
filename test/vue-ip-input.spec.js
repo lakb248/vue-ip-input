@@ -3,9 +3,9 @@ import Vue from 'vue';
 import IpInput from '../src/vue-ip-input.vue';
 
 var initIpInput = config => {
-    return new Vue({
-        template: '<div><vue-ip-input :ip.sync="ip"' +
-            'v-ref:ip-input :on-change="onChange"' +
+    var comp = new Vue({
+        template: '<div><vue-ip-input :ip="ip"' +
+            'ref="ip-input" :on-change="onChange"' +
             ' :on-blur="onBlur"></vue-ip-input></div>',
         components: {
             'vue-ip-input': IpInput
@@ -27,7 +27,9 @@ var initIpInput = config => {
                 }
             }
         }
-    }).$mount().$appendTo('body');
+    }).$mount();
+    document.body.appendChild(comp.$el);
+    return comp;
 };
 
 var trigger = (target, event, process) => {
@@ -47,34 +49,40 @@ describe('vue-ip-input.vue', () => {
         var vm = initIpInput({
             ip: '127.0.0.1'
         });
-        expect(vm.$refs.ipInput.segments.join('.')).toBe('127.0.0.1');
+        expect(vm.$refs['ip-input'].segments.join('.')).toBe('127.0.0.1');
     });
 
     it('should render correct if the ip is invalid', () => {
         var vm = initIpInput({
             ip: '333.123.123.123'
         });
-        expect(vm.$refs.ipInput.segments.join('.')).toBe('255.123.123.123');
+        expect(vm.$refs['ip-input'].segments.join('.')).toBe('255.123.123.123');
     });
     it('should update the ip if the input change', done => {
         var vm = initIpInput({
-            ip: '127.0.0.1'
+            ip: '127.0.0.1',
+            onChange(ip) {
+                vm.ip = ip;
+            }
         });
-        vm.$refs.ipInput.segments.$set(0, 255);
+        vm.$refs['ip-input'].segments.splice(0, 1, 255);
         Vue.nextTick(() => {
             expect(vm.ip).toBe('255.0.0.1');
             done();
         });
     });
-    it('should update the up to empty string if the input is epmty', done => {
+    it('should update the ip to empty string if the input is epmty', done => {
         var vm = initIpInput({
-            ip: '127.0.0.1'
+            ip: '127.0.0.1',
+            onChange(ip) {
+                vm.ip = ip;
+            }
         });
-        var segments = vm.$refs.ipInput.segments;
-        segments.$set(0, '');
-        segments.$set(1, '');
-        segments.$set(2, '');
-        segments.$set(3, '');
+        var segments = vm.$refs['ip-input'].segments;
+        segments.splice(0, 1, '');
+        segments.splice(1, 1, '');
+        segments.splice(2, 1, '');
+        segments.splice(3, 1, '');
         Vue.nextTick(() => {
             expect(vm.ip).toBe('');
             done();
@@ -88,8 +96,8 @@ describe('vue-ip-input.vue', () => {
                 onChangeCalled = true;
             }
         });
-        var segments = vm.$refs.ipInput.segments;
-        segments.$set(0, '');
+        var segments = vm.$refs['ip-input'].segments;
+        segments.splice(0, 1, '');
         Vue.nextTick(() => {
             expect(onChangeCalled).toBe(true);
             done();
@@ -103,7 +111,7 @@ describe('vue-ip-input.vue', () => {
                 onBlurCalled = true;
             }
         });
-        var input = vm.$refs.ipInput.$el.querySelector('input');
+        var input = vm.$refs['ip-input'].$el.querySelector('input');
         input.focus();
         input.blur();
         Vue.nextTick(() => {
@@ -115,9 +123,12 @@ describe('vue-ip-input.vue', () => {
     });
     it('should update the ip if keydown(Number 2)', done => {
         var vm = initIpInput({
-            ip: '127.0.0.1'
+            ip: '127.0.0.1',
+            onChange(ip) {
+                vm.ip = ip;
+            }
         });
-        var ipInput = vm.$refs.ipInput;
+        var ipInput = vm.$refs['ip-input'];
         var input = ipInput.$el.querySelectorAll('input')[1];
         input.value = '2';
         trigger(input, 'input');
@@ -130,7 +141,7 @@ describe('vue-ip-input.vue', () => {
         var vm = initIpInput({
             ip: '0.0.0.1'
         });
-        var ipInput = vm.$refs.ipInput;
+        var ipInput = vm.$refs['ip-input'];
         var input = ipInput.$el.querySelector('input');
         input.value = 'a';
         trigger(input, 'input');
@@ -141,9 +152,12 @@ describe('vue-ip-input.vue', () => {
     });
     it('should set to 255 if the input is over 255', done => {
         var vm = initIpInput({
-            ip: '0.0.0.1'
+            ip: '0.0.0.1',
+            onChange(ip) {
+                vm.ip = ip;
+            }
         });
-        var ipInput = vm.$refs.ipInput;
+        var ipInput = vm.$refs['ip-input'];
         var input = ipInput.$el.querySelector('input');
         input.value = '256';
         trigger(input, 'input');
@@ -154,9 +168,12 @@ describe('vue-ip-input.vue', () => {
     });
     it('should set to empty if the input is 0', done => {
         var vm = initIpInput({
-            ip: '0.0.0.1'
+            ip: '0.0.0.1',
+            onChange(ip) {
+                vm.ip = ip;
+            }
         });
-        var ipInput = vm.$refs.ipInput;
+        var ipInput = vm.$refs['ip-input'];
         var input = ipInput.$el.querySelector('input');
         input.value = '0';
         trigger(input, 'input');
@@ -170,7 +187,7 @@ describe('vue-ip-input.vue', () => {
         var vm = initIpInput({
             ip: '0..0.1'
         });
-        var ipInput = vm.$refs.ipInput;
+        var ipInput = vm.$refs['ip-input'];
         var input = ipInput.$el.querySelectorAll('input')[1];
         trigger(input, 'keydown', e => {
             e.keyCode = 37;
@@ -186,7 +203,7 @@ describe('vue-ip-input.vue', () => {
         var vm = initIpInput({
             ip: '...'
         });
-        var ipInput = vm.$refs.ipInput;
+        var ipInput = vm.$refs['ip-input'];
         var input = ipInput.$el.querySelectorAll('input')[0];
         trigger(input, 'keydown', e => {
             e.keyCode = 39;

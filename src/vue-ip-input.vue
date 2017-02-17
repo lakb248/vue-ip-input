@@ -1,12 +1,12 @@
 <template>
     <div class="ip-input-container">
-        <div class="ip-segment" v-for="segment in segments" track-by="$index">
+        <div class="ip-segment" v-for="(segment, index) in segments">
             <input type="text" maxlength="3" class="ip-segment-input" :value="segment"
-                v-on:keydown="onInputKeydown($event, $index)"
-                v-on:input="onInput($event, $index)"
+                v-on:keydown="onInputKeydown($event, index)"
+                v-on:input="onInput($event, index)"
                 v-on:blur="onInputBlur()"
-                v-on:paste="onPaste($event, $index)">
-            <i v-show="$index != segments.length - 1">.</i>
+                v-on:paste="onPaste($event, index)">
+            <i v-show="index != segments.length - 1">.</i>
         </div>
     </div>
 </template>
@@ -96,11 +96,11 @@
                     return;
                 } else if (segment > 255 || segment < 0) {
                     // set the segment to 255 if out of ip range
-                    this.segments.$set(index, 255);
+                    this.segments.splice(index, 1, 255);
                 } else if (segment === 0) {
-                    this.segments.$set(index, '');
+                    this.segments.splice(index, 1, '');
                 } else {
-                    this.segments.$set(index, segment);
+                    this.segments.splice(index, 1, segment);
                 }
                 // jump to next input
                 if (value.length === 3 && index < 3) {
@@ -124,13 +124,13 @@
                     var value = Number(segment);
                     if (index + i < 4 && !isNaN(value) &&
                     value >= 0 && value <= 255) {
-                        this.segments.$set(index + i, value);
+                        this.segments.splice(index + i, 1, value);
                     }
                 });
                 e.preventDefault();
             }
         },
-        ready() {
+        mounted() {
             var ip = this.ip;
             if (ip && ip.indexOf('.') !== -1) {
                 ip.split('.').map((segment, index) => {
@@ -138,10 +138,11 @@
                     if (isNaN(segment) || segment < 0 || segment > 255) {
                         segment = 255;
                     }
-                    this.segments.$set(index, segment);
+                    this.segments.splice(index, 1, segment);
                     return segment;
                 });
             }
+
             this.$watch(() => {
                 return this.segments.join('.');
             }, (val, oldValue) => {
@@ -149,7 +150,6 @@
                     if (val === '...') {
                         val = '';
                     }
-                    this.ip = val;
                     if (this.onChange) {
                         this.onChange(val);
                     }

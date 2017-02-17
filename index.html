@@ -6,7 +6,8 @@
     </head>
     <body>
         <div id="container">
-            <vue-ip-input :ip="ip"></vue-ip-input>
+            <vue-ip-input :ip="ip" :on-change="ipChange"></vue-ip-input>
+            <p>IP: {{ip}}</p>
         </div>
         <script type="text/javascript" src="/build/build.js"></script>
     </body>

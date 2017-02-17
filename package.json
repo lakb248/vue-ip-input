@@ -4,14 +4,14 @@
   "description": "An ip input implement by vuejs",
   "main": "./dist/vue-ip-input.min.js",
   "scripts": {
-    "dev": "webpack-dashboard -p 3001 -- webpack-dev-server --watch --progress --config webpack.dev.config.js --port 8888",
+    "dev": "webpack-dev-server --watch --progress --config webpack.dev.config.js --port 8888",
     "build": "webpack --progress --config webpack.prod.config.js",
     "test": "karma start karma.config.js",
     "ci": "npm run test && npm run build && codecov -t 4f1b7b5a-9eb3-41f5-9218-08b805826905 coverage/cobertura-coverage.xml"
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/lakb248/vue-ip-input.git"
+    "url": "https://github.com/lakb248/vue-ip-input.git#next"
   },
   "bugs": {
     "url": "https://github.com/lakb248/vue-ip-input/issues"
@@ -25,7 +25,7 @@
   "author": "lakb248@gmail.com",
   "license": "ISC",
   "dependencies": {
-    "vue": "^1.0.26"
+    "vue": "^2.0.1"
   },
   "devDependencies": {
     "babel-core": "^6.5.2",
@@ -63,7 +63,6 @@
     "vue-loader": "^8.1.3",
     "vue-style-loader": "^1.0.0",
     "webpack": "^2.1.0-beta.2",
-    "webpack-dashboard": "^0.1.8",
     "webpack-dev-server": "^1.15.0",
     "webpack-merge": "^0.14.1"
   }
