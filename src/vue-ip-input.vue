@@ -102,8 +102,6 @@
                 } else if (segment > 255 || segment < 0) {
                     // set the segment to 255 if out of ip range
                     this.segments.splice(index, 1, 255);
-                } else if (segment === 0) {
-                    this.segments.splice(index, 1, '');
                 } else {
                     this.segments.splice(index, 1, segment);
                 }
@@ -165,7 +163,7 @@
     };
 </script>
 
-<style lang="sass" scoped>
+<style lang="sass-loader" scoped>
     .ip-input-container {
         display: inline-block;
         height: 28px;

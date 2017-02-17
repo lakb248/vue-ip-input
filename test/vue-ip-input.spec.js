@@ -178,7 +178,7 @@ describe('vue-ip-input.vue', () => {
         input.value = '0';
         trigger(input, 'input');
         Vue.nextTick(() => {
-            expect(vm.ip).toBe('.0.0.1');
+            expect(vm.ip).toBe('0.0.0.1');
             done();
         });
     });
