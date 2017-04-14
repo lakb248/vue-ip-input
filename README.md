@@ -74,6 +74,16 @@ new Vue({
 | onChange | trigger when the ip change |
 | onBlur | trigger when the input blur |
 
+## Contribution
+First, install dependencies
+```
+npm install
+```
+Second, setup development environment
+```
+npm run dev
+```
+
 ## License
 
 [MIT](http://opensource.org/licenses/MIT)
