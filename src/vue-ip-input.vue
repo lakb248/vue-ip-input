@@ -99,7 +99,10 @@
                 var segment = Number(value);
                 if (isNaN(segment)) {
                     return;
-                } else if (segment > 255 || segment < 0) {
+                } else if(value === ''){
+                    this.segments.splice(index, 1, ''); 
+                }
+                else if (segment > 255 || segment < 0) {
                     // set the segment to 255 if out of ip range
                     this.segments.splice(index, 1, 255);
                 } else {
@@ -135,7 +138,7 @@
             syncIp(ip) {
                 if (ip && ip.indexOf('.') !== -1) {
                     ip.split('.').map((segment, index) => {
-                        segment = Number(segment);
+                        // segment = Number(segment);
                         if (isNaN(segment) || segment < 0 || segment > 255) {
                             segment = 255;
                         }
