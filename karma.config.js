@@ -2,6 +2,8 @@ var webpack = require('webpack');
 var baseConfig = require('./webpack.base.config');
 var merge = require('webpack-merge');
 delete baseConfig.entry;
+console.log(baseConfig);
+baseConfig.entry = './test/index.js';
 
 // add isparta-loader to vue file
 var webpackConfig = baseConfig;
@@ -10,7 +12,7 @@ webpackConfig.plugins = (baseConfig.plugins || []).concat([
         options: {
             vue: {
                 loaders: {
-                    js: 'isparta'
+                    js: 'isparta-loader'
                 }
             }
         }

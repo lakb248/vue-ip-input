@@ -84,15 +84,14 @@
                     if ((value.length === 0 || getRange(event.target).end === 0) &&
                         index > 0) {
                         this.$el.getElementsByTagName('input')[index - 1].focus();
-                        //When jump to pre input(enter "backspace"), thr cursor should in the end.
-                        //before fix: 127.|0.0.0  =>   12|7.0.0.1
-                        //after fix: 127.|0.0.0 = >   127|.0.0.0
-                        //   notes: "|" mean the cursor position.
+                        // When jump to pre input(enter "backspace"), thr cursor should in the end.
+                        // before fix: 127.|0.0.0  =>   12|7.0.0.1
+                        // after fix: 127.|0.0.0 = >   127|.0.0.0
+                        // notes: "|" mean the cursor position.
                         event.preventDefault();
                     }
                 } else if (keyCode === 39) {
-                    if (getRange(event.target).end === value.length &&
-                        index < 3) {
+                    if (getRange(event.target).end === value.length && index < 3) {
                         // move to cursor to the next input if right arrow is pressed at the end of one input
                         this.$el.getElementsByTagName('input')[index + 1].focus();
                     }
@@ -104,17 +103,16 @@
                 var segment = Number(value);
                 if (isNaN(segment)) {
                     return;
-                } else if(value === ''){
-                    this.segments.splice(index, 1, ''); 
-                }
-                else if (segment > 255 || segment < 0) {
+                } else if (value === '') {
+                    this.segments.splice(index, 1, '');
+                } else if (segment > 255 || segment < 0) {
                     // set the segment to 255 if out of ip range
                     this.segments.splice(index, 1, 255);
                 } else {
                     this.segments.splice(index, 1, segment);
                 }
                 // jump to next input
-                if (value.length === 3 && index < 3 || value[value.length-1] === '.') {
+                if (value.length === 3 && index < 3 || value[value.length - 1] === '.') {
                     this.$el.getElementsByTagName('input')[index + 1].focus();
                 }
             },
@@ -132,9 +130,9 @@
                 var pasteText = e.clipboardData.getData('text/plain');
                 var segments = pasteText.split('.');
                 segments.forEach((segment, i) => {
-                    if (index + i < 4 && !isNaN(value) &&
-                    value >= 0 && value <= 255) {
-                        this.segments.splice(index + i, 1, value);
+                    if (index + i < 4 && !isNaN(segment) &&
+                    segment >= 0 && segment <= 255) {
+                        this.segments.splice(index + i, 1, segment);
                     }
                 });
                 e.preventDefault();
@@ -142,7 +140,6 @@
             syncIp(ip) {
                 if (ip && ip.indexOf('.') !== -1) {
                     ip.split('.').map((segment, index) => {
-                        // segment = Number(segment);
                         if (isNaN(segment) || segment < 0 || segment > 255) {
                             segment = 255;
                         }
