@@ -6,7 +6,7 @@
     </head>
     <body>
         <div id="container">
-            <vue-ip-input :ip="ip" :on-change="ipChange"></vue-ip-input>
+            <vue-ip-input :ip="ip" :on-change="ipChange" placeholder="•••"></vue-ip-input>
             <p>IP: {{ip}}</p>
             <button v-on:click="changeIp()">Change</button>
         </div>
