@@ -2,6 +2,7 @@
     <div class="ip-input-container">
         <div class="ip-segment" v-for="(segment, index) in segments">
             <input type="text" maxlength="3" class="ip-segment-input" :value="segment"
+                   :placeholder="placeholder"
                 v-on:keydown="onInputKeydown($event, index)"
                 v-on:input="onInput($event, index)"
                 v-on:blur="onInputBlur()"
@@ -62,6 +63,7 @@
                 type: String,
                 required: true
             },
+            placeholder: String,
             onChange: Function,
             onBlur: Function
         },
